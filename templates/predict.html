@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>EcoSort - Predict</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .predict-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .upload-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .upload-card h2 {
+            margin-bottom: 20px;
+            color: #2d6a4f;
+            font-weight: 700;
+        }
+
+        .file-input-wrapper {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 2px dashed #b7e4c7;
+            border-radius: 15px;
+            background-color: #f7fffb;
+        }
+
+        .result-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .preview-img {
+            max-width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .prediction-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        .O {
+            background-color: #d8f3dc;
+            color: #1b4332;
+            border: 2px solid #2d6a4f;
+        }
+
+        .R {
+            background-color: #caf0f8;
+            color: #0077b6;
+            border: 2px solid #0077b6;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">EcoSort</div>
+        <div class="nav-links"> <a href="/">Home</a> <a href="#">About</a> <a href="#">Login</a> </div>
+    </nav>
+    <div class="predict-container">
+        <div class="upload-card">
+            <h2>Waste Classification</h2>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="file-input-wrapper"> <input type="file" name="file" required> </div> <button type="submit"
+                    class="btn">Classify Now</button>
+            </form> {% if prediction %} <div class="result-section"> {% if filename %} <img
+                    src="{{ url_for('static', filename='uploads/' + filename) }}" class="preview-img"> {% endif %} <div
+                    class="prediction-text {{ prediction }}"> Result: {{ prediction }} </div> {% if confidence %} <div>
+                    Confidence: {{ confidence }}</div> {% endif %} <a href="/predict" class="back-link">Try another
+                    one</a> </div> {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

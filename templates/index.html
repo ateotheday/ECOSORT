@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EcoSort - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">🌱 EcoSort</div>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="#about">About</a>
+<a href="{{ url_for('login') }}">Login</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-content">
+            <span class="tag">AI Powered Waste Segregation</span>
+
+            <h1>Automating a Greener Future 🌍</h1>
+
+            <p>
+                EcoSort uses Artificial Intelligence to instantly classify waste into
+                <b>Organic</b> and <b>Recyclable</b> categories — promoting smarter disposal
+                and a cleaner environment.
+            </p>
+
+            <div class="hero-actions">
+                <a href="{{ url_for('predict') }}" class="btn">Check Now</a>
+                <a href="#about" class="btn-outline">Learn More</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ABOUT / FEATURES -->
+    <section class="section" id="about">
+        <div class="section-head">
+            <h2>Why EcoSort?</h2>
+            <p>
+                Improper waste segregation causes pollution and resource loss.
+                EcoSort provides quick classification and supports smart-bin automation.
+            </p>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3>⚡ AI Detection</h3>
+                <p>Upload an image and get instant classification within seconds.</p>
+            </div>
+
+            <div class="card">
+                <h3>♻ Eco Friendly</h3>
+                <p>Encourages proper recycling and organic waste handling.</p>
+            </div>
+
+            <div class="card">
+                <h3>🔌 Hardware Ready</h3>
+                <p>Connect to ESP32 to automatically open the correct bin lid.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2026 EcoSort — Automating a greener future 🌱</p>
+    </footer>
+
+</body>
+</html>
