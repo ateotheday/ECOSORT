@@ -8,8 +8,10 @@ import numpy as np
 import os
 import requests
 import json
-import threading   # ✅ ADDED
+import threading 
 
+
+#initial db definitions
 def get_db():
     return mysql.connector.connect(
         host="localhost",
@@ -21,15 +23,22 @@ def get_db():
 app = Flask(__name__)
 app.secret_key = "ecosort_secret_key"
 
-UPLOAD_FOLDER = "static/uploads"
+
+# for each upload we save it to a folder and then pass the path to the model for prediction
+UPLOAD_FOLDER = "static/uploads" 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+# We have 2 classes: Organic/Non-Recyclable and Recyclable.
 DISPLAY_CLASS_NAMES = ["Organic/Non-Recyclable", "Recyclable"]
 DB_CLASS_NAMES = ["Organic", "Recyclable"]
 
+
+# The model is "waste_model_final.keras"
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "waste_model_final.keras")
 
+
+# We load the model once at startup to avoid reloading it for every prediction, which would be very slow.
 try:
     model = tf.keras.models.load_model(MODEL_PATH, compile=False)
     print("Model Loaded Successfully!")
@@ -37,9 +46,12 @@ except Exception as e:
     print(f"Error loading model: {e}")
     model = None
 
+
+
+#IP of the ESP32. Changes everytime 
 ESP32_IP = "http://172.31.241.204"
 
-# ✅ NEW FUNCTION (background ESP call)
+#  NEW FUNCTION to make movements faster by sending the command in a separate thread without waiting for the response. 
 def send_to_esp(class_index):
     try:
         requests.get(f"{ESP32_IP}/control?class={class_index}", timeout=5)
@@ -308,7 +320,7 @@ def predict():
         add_points(session["user_id"], 10)
         session["points"] = get_user_points(session["user_id"])
 
-    # ✅ FAST NON-BLOCKING CALL
+    # FAST NON-BLOCKING CALL
     threading.Thread(target=send_to_esp, args=(class_index,)).start()
 
     return render_template(
