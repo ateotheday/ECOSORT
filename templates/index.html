@@ -412,37 +412,59 @@ function toggleChat(){
             messages.innerHTML = "<p><b>EcoBot:</b> Hi! Ask me where to throw waste 🌱</p>";
         }
     }
-}
-
-async function sendMessage(){
-    let input = document.getElementById("userInput").value;
+}async function sendMessage(){
+    let inputBox = document.getElementById("userInput");
+    let input = inputBox.value;
     let messages = document.getElementById("messages");
 
     if(input.trim() === "") return;
 
+    // show user message
     messages.innerHTML += `<p><b>You:</b> ${input}</p>`;
+
+    // clear input immediately
+    inputBox.value = "";
+
+    // 🔥 loading spinner
+    let loadingId = "loading-" + Date.now();
+
+    messages.innerHTML += `
+        <p id="${loadingId}">
+            <b>EcoBot:</b>
+            <span class="spinner"></span> thinking...
+        </p>
+    `;
+
+    messages.scrollTop = messages.scrollHeight;
 
     try{
         const res = await fetch("/chat", {
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify({message:input})
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: input
+            })
         });
 
         const data = await res.json();
+
+        // remove spinner
+        document.getElementById(loadingId).remove();
+
+        // show response
         messages.innerHTML += `<p><b>EcoBot:</b> ${data.reply}</p>`;
+
     } catch(err){
-        messages.innerHTML += `<p><b>EcoBot:</b> Sorry, I can't answer right now.</p>`;
+
+        document.getElementById(loadingId).remove();
+
+        messages.innerHTML += `<p><b>EcoBot:</b> Sorry, something went wrong.</p>`;
     }
 
-    document.getElementById("userInput").value="";
     messages.scrollTop = messages.scrollHeight;
 }
-
-// Press Enter to send message
-document.getElementById("userInput").addEventListener("keypress", function(e){
-    if(e.key === "Enter") sendMessage();
-});
 </script>
 
 </body>

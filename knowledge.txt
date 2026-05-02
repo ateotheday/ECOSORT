@@ -1,0 +1,33 @@
+EcoSort is an AI-powered waste classification system developed by students of College of Engineering Munnar.
+
+Team members:
+- Aathira R N
+- Aleena Ajith
+- Ameen PP
+- Thabsheera Thasnim
+
+Guided by:
+- Dr. Soumya
+- HOD CSE Dr. Deepa S Kumar
+
+It classifies waste into two categories:
+- Organic
+- Recyclable
+
+The system uses a YOLO model trained on the TACO dataset.
+
+Users can:
+- Upload waste images
+- Get classification results
+- Use hardware-based sorting with ESP32 and servo motors
+- View leaderboard rankings
+
+Without login:
+- Users can classify waste
+- View leaderboard
+
+With login:
+- Users can use hardware system
+- Earn points
+
+A research paper was published in IJMETS April edition.

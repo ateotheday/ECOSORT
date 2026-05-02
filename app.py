@@ -337,36 +337,74 @@ def test_hardware(class_index):
         return jsonify({"status": "success", "sent_class": class_index})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
-
-# ---------------------- Ollama Chat ----------------------
 @app.route("/chat", methods=["POST"])
 def chat():
-    data = request.get_json()
-    user_message = data.get("message", "")
+    user_message = request.json["message"]
 
-    if not user_message:
-        return jsonify({"reply": "Please type something!"})
+    prompt = f"""
+You are EcoSort AI assistant for a waste sorting system.
+EcoSort is an all waste solution website.
+it uses two models:
+yolov8 for waste detection and classification and mobilenetv2 for image classification and hardware integration.
 
-    try:
-        payload = {
-            "model": "llama3:latest",
-            "prompt": user_message,
-            "temperature": 0.7,
-            "max_tokens": 200
+
+Your job:
+- Help users with waste sorting, recycling, and EcoSort system usage
+- Be clear, short, and accurate
+- If unsure, say:
+"I'm not sure about that, but I can help you with questions related to waste sorting and recycling!"
+
+System info:
+- EcoSort uses YOLOv8 to detect and classify waste items
+- It also uses MobileNetV2 for image classification and hardware integration
+- It tracks user points after login
+
+Rules:
+- Be concise
+- Use simple language
+- Do not give long paragraphs
+
+Examples:
+
+Q: How do I use EcoSort?
+A: Upload an image, the YOLOv8 model detects waste items and classifies them without logging in.
+ Points are updated after login.
+
+Q: What can I recycle?
+A: Paper, plastic, glass, and metal are recyclable.
+
+Q: Who made EcoSort?
+A: Students of College of Engineering Munnar developed EcoSort:
+Aathira R N, Aleena Ajith, Ameen PP, Thabsheera Thasnim under the guidance of Dr. Soumya S and Dr. Deepa S Kumar.
+Q.
+can i classify without logging in?
+yes, but leaderboard wuld not be updated and you won't earn points.
+
+Q.
+what stack was used for development?
+python flask for backend.
+html,css,javascript for front end.
+database using xampp server mysql.
+Esp32 microcontroller for hardware integration.
+
+Now answer this:
+User: {user_message}
+EcoSort:
+"""
+
+    response = requests.post(
+        "http://localhost:11434/api/generate",
+        json={
+            "model": "mistral",
+            "prompt": prompt,
+            "stream": False,
+            "temperature": 0.3
         }
-        response = requests.post(
-            "http://127.0.0.1:11434/completions",
-            headers={"Content-Type": "application/json"},
-            data=json.dumps(payload),
-            timeout=10
-        )
-        response_json = response.json()
-        bot_reply = response_json.get("completion", "Sorry, I couldn't understand that.")
-    except Exception as e:
-        bot_reply = f"Error contacting Ollama: {e}"
+    )
 
-    return jsonify({"reply": bot_reply})
+    data = response.json()
 
-# ---------------------- Run ----------------------
+    return jsonify({"reply": data["response"]})
+#---- Run ----------------------
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True) 
