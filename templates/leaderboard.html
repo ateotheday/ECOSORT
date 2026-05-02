@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaderboard - EcoSort</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f8fffb;
+    color:#1f2937;
+}
+
+/* NAVBAR */
+.navbar{
+    position:fixed;
+    width:100%;
+    top:0;
+    display:flex;
+    justify-content:space-between;
+    padding:18px 60px;
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid #e5e7eb;
+    z-index:1000;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:700;
+    color:#16a34a;
+}
+
+.nav-links a{
+    margin-left:25px;
+    text-decoration:none;
+    color:#374151;
+    font-size:17px;
+    transition:0.3s;
+}
+
+.nav-links a:hover{
+    color:#16a34a;
+}
+
+/* MAIN BACKGROUND */
+.main{
+    min-height:100vh;
+    padding-top:120px;
+    display:flex;
+    justify-content:center;
+
+    background:
+    linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.95)),
+    url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6');
+
+    background-size:cover;
+    background-position:center;
+}
+
+/* CONTAINER */
+.wrap{
+    width:100%;
+    max-width:900px;
+    padding:20px;
+}
+
+/* TITLE */
+.title{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.title h1{
+    font-size:36px;
+}
+
+.tag{
+    display:inline-block;
+    margin-top:10px;
+    padding:5px 12px;
+    border-radius:20px;
+    background:#dcfce7;
+    color:#166534;
+    font-size:14px;
+}
+
+/* CARD */
+.card{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.1);
+
+    animation:fadeUp 0.8s ease;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* HEADER */
+.sectionHead{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.sectionHead h2{
+    color:#16a34a;
+}
+
+/* BUTTON */
+.btn{
+    padding:8px 16px;
+    border-radius:20px;
+    text-decoration:none;
+    font-size:14px;
+    background:#16a34a;
+    color:white;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#15803d;
+}
+
+/* TABLE */
+.leaderboard-table{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+th, td{
+    padding:12px;
+    text-align:center;
+}
+
+th{
+    background:#f0fdf4;
+    color:#166534;
+    font-weight:600;
+}
+
+/* ROW STYLE */
+tbody tr{
+    border-bottom:1px solid #e5e7eb;
+    transition:0.3s;
+}
+
+tbody tr:hover{
+    background:#f0fdf4;
+}
+
+/* TOP 3 HIGHLIGHT */
+tbody tr:nth-child(1){
+    background:#ecfdf5;
+    font-weight:600;
+}
+
+tbody tr:nth-child(2){
+    background:#f0fdf4;
+}
+
+tbody tr:nth-child(3){
+    background:#f7fee7;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">🌱 EcoSort</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="#">About</a>
+        <a href="{{ url_for('login') }}">Login</a>
+    </div>
+</nav>
+
+<div class="main">
+
+    <div class="wrap">
+
+        <div class="title">
+            <h1>Leaderboard</h1>
+            <div class="tag">Top EcoSort Users</div>
+        </div>
+
+        <div class="card">
+
+            <div class="sectionHead">
+                <h2>Rankings</h2>
+                <a class="btn" href="{{ url_for('home') }}">← Back</a>
+            </div>
+
+            <div class="leaderboard-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Points</th>
+                            <th>Recyclable Classified</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for user in leaderboard %}
+                        <tr>
+                            <td>
+                                {% if loop.index == 1 %}
+                                    🥇 {{ loop.index }}
+                                {% elif loop.index == 2 %}
+                                    🥈 {{ loop.index }}
+                                {% elif loop.index == 3 %}
+                                    🥉 {{ loop.index }}
+                                {% else %}
+                                    {{ loop.index }}
+                                {% endif %}
+                            </td>
+                            <td>{{ user[0] }}</td>
+                            <td>{{ user[1] }}</td>
+                            <td>{{ user[2] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

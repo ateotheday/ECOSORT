@@ -2,25 +2,186 @@
 <html>
 <head>
     <title>EcoSort Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+
+/* RESET */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f8fffb;
+    color:#1f2937;
+}
+
+/* NAVBAR */
+.navbar{
+    position:fixed;
+    width:100%;
+    top:0;
+    display:flex;
+    justify-content:space-between;
+    padding:18px 60px;
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid #e5e7eb;
+    z-index:1000;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:700;
+    color:#16a34a;
+}
+
+.nav-links a{
+    margin-left:25px;
+    text-decoration:none;
+    color:#374151;
+    font-size:17px;
+    transition:0.3s;
+}
+
+.nav-links a:hover{
+    color:#16a34a;
+}
+
+/* MAIN BACKGROUND (same as other pages) */
+.main{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding-top:100px;
+
+    background:
+    linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.95)),
+    url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6');
+
+    background-size:cover;
+    background-position:center;
+}
+
+/* CARD */
+.form-container{
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.1);
+    text-align:center;
+    width:100%;
+    max-width:420px;
+
+    animation:fadeUp 0.8s ease;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.form-container h2{
+    margin-bottom:25px;
+    color:#16a34a;
+}
+
+/* INPUTS */
+input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:10px;
+    border:1px solid #d1d5db;
+    font-size:15px;
+    outline:none;
+    transition:0.3s;
+}
+
+input:focus{
+    border-color:#16a34a;
+    box-shadow:0 0 0 3px rgba(22,163,74,0.1);
+}
+
+/* BUTTON */
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:25px;
+    background:#16a34a;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(22,163,74,0.25);
+}
+
+/* TEXT */
+.form-container p{
+    margin-top:15px;
+    font-size:14px;
+}
+
+.form-container a{
+    color:#16a34a;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.form-container a:hover{
+    text-decoration:underline;
+}
+
+</style>
 </head>
+
 <body>
 
-<div class="form-container">
-    <h2>Create Account</h2>
-
-    <form method="POST">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="text" name="name" placeholder="Full Name" required>
-        <input type="text" name="organization" placeholder="Organization Name">
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Register</button>
-    </form>
-
-    <p>Already have an account?
+<nav class="navbar">
+    <div class="logo">🌱 EcoSort</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="#">About</a>
         <a href="{{ url_for('login') }}">Login</a>
-    </p>
+    </div>
+</nav>
+
+<div class="main">
+
+    <div class="form-container">
+        <h2>Create Account</h2>
+
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="text" name="organization" placeholder="Organization Name">
+            <input type="password" name="password" placeholder="Password" required>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already have an account?
+            <a href="{{ url_for('login') }}">Login</a>
+        </p>
+    </div>
+
 </div>
 
 </body>

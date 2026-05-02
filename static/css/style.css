@@ -72,3 +72,74 @@ button:hover {
     text-decoration: none;
     font-weight: 600;
 }
+
+/*leaderboard*/
+.leaderboard-table {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+.leaderboard-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.leaderboard-table th {
+    background: #f5f7fb;
+    font-weight: 600;
+}
+
+.leaderboard-table tr:hover {
+    background: #f9fbff;
+}
+
+.current-user-row {
+    background: #eef8ee;
+    font-weight: 600;
+}
+
+.you-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #dff5e1;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.stats-row {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0 10px 0;
+    flex-wrap: wrap;
+}
+
+.mini-stat {
+    background: #f7f9fc;
+    padding: 14px 18px;
+    border-radius: 12px;
+    min-width: 140px;
+}
+
+.mini-stat span {
+    display: block;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.mini-stat strong {
+    font-size: 22px;
+    color: #222;
+}
