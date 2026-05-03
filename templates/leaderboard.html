@@ -219,6 +219,79 @@ tbody tr:nth-child(3){
                 <h2>Rankings</h2>
                 <a class="btn" href="{{ url_for('home') }}">← Back</a>
             </div>
+          <form method="GET" style="margin-bottom:20px; text-align:center;">
+    <select name="college" onchange="this.form.submit()">
+
+        <option value="" {% if not selected_college or selected_college == "" %}selected{% endif %}>
+            All Colleges
+        </option>
+
+        <option value="College of Engineering Munnar" {% if selected_college == "College of Engineering Munnar" %}selected{% endif %}>
+            College of Engineering Munnar
+        </option>
+
+        <option value="CET Trivandrum" {% if selected_college == "CET Trivandrum" %}selected{% endif %}>
+            CET Trivandrum
+        </option>
+
+        <option value="GEC Thrissur" {% if selected_college == "GEC Thrissur" %}selected{% endif %}>
+            GEC Thrissur
+        </option>
+
+        <option value="MEC Kochi" {% if selected_college == "MEC Kochi" %}selected{% endif %}>
+            MEC Kochi
+        </option>
+
+        <option value="TKM Kollam" {% if selected_college == "TKM Kollam" %}selected{% endif %}>
+            TKM Kollam
+        </option>
+
+        <option value="GEC Kozhikode" {% if selected_college == "GEC Kozhikode" %}selected{% endif %}>
+            GEC Kozhikode
+        </option>
+
+        <option value="RIT Kottayam" {% if selected_college == "RIT Kottayam" %}selected{% endif %}>
+            RIT Kottayam
+        </option>
+
+        <option value="SCTCE Trivandrum" {% if selected_college == "SCTCE Trivandrum" %}selected{% endif %}>
+            SCTCE Trivandrum
+        </option>
+
+        <option value="FISAT Ernakulam" {% if selected_college == "FISAT Ernakulam" %}selected{% endif %}>
+            FISAT Ernakulam
+        </option>
+
+        <option value="College of Engineering Chengannur" {% if selected_college == "College of Engineering Chengannur" %}selected{% endif %}>
+            College of Engineering Chengannur
+        </option>
+
+        <option value="MES College Kuttippuram" {% if selected_college == "MES College Kuttippuram" %}selected{% endif %}>
+            MES College Kuttippuram
+        </option>
+
+        <option value="Adi Shankara Institute Kalady" {% if selected_college == "Adi Shankara Institute Kalady" %}selected{% endif %}>
+            Adi Shankara Institute Kalady
+        </option>
+
+        <option value="MITS Ernakulam" {% if selected_college == "MITS Ernakulam" %}selected{% endif %}>
+            MITS Ernakulam
+        </option>
+
+        <option value="VJEC Kannur" {% if selected_college == "VJEC Kannur" %}selected{% endif %}>
+            VJEC Kannur
+        </option>
+
+        <option value="AWH Engineering College Calicut" {% if selected_college == "AWH Engineering College Calicut" %}selected{% endif %}>
+            AWH Engineering College Calicut
+        </option>
+
+        <option value="other" {% if selected_college == "other" %}selected{% endif %}>
+            Other
+        </option>
+
+    </select>
+</form>
 
             <div class="leaderboard-table">
                 <table>

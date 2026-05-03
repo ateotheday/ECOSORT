@@ -59,22 +59,20 @@ def send_to_esp(class_index):
         print(f"ESP32 Error: {e}")
 
 # ---------------------- Database & User Functions ----------------------
-def create_user(username, password):
+def create_user(username, password, name, college):
     db = get_db()
     cur = db.cursor()
 
     pw_hash = generate_password_hash(password)
-    display_name = username.split("@")[0] if "@" in username else username
 
     cur.execute(
-        "INSERT INTO users (name, email, password_hash, points) VALUES (%s, %s, %s, %s)",
-        (display_name, username, pw_hash, 0)
+        "INSERT INTO users (name, email, password_hash, points, college) VALUES (%s, %s, %s, %s, %s)",
+        (name, username, pw_hash, 0, college)
     )
 
     db.commit()
     cur.close()
     db.close()
-
 def get_user(username, password):
     db = get_db()
     cur = db.cursor()
@@ -159,31 +157,40 @@ def get_user_points(user_id):
     cur.close()
     db.close()
     return row[0] if row else 0
-
-def get_leaderboard(limit=10):
+def get_leaderboard(limit=10, college=None):
     db = get_db()
     cur = db.cursor()
 
-    cur.execute(
-        """
+    query = """
         SELECT
             COALESCE(NULLIF(u.name, ''), SUBSTRING_INDEX(u.email, '@', 1)) AS display_name,
             u.points,
-            COUNT(CASE WHEN p.predicted_label = 'Recyclable' THEN 1 END) AS recyclable_count
+            COUNT(CASE WHEN p.predicted_label = 'Recyclable' THEN 1 END) AS recyclable_count,
+            u.college
         FROM users u
         LEFT JOIN predictions p ON u.id = p.user_id
-        GROUP BY u.id, u.name, u.email, u.points
+    """
+
+    params = []
+
+    if college:
+        query += " WHERE u.college = %s "
+        params.append(college)
+
+    query += """
+        GROUP BY u.id, u.name, u.email, u.points, u.college
         ORDER BY u.points DESC, u.id ASC
         LIMIT %s
-        """,
-        (limit,)
-    )
+    """
+
+    params.append(limit)
+
+    cur.execute(query, tuple(params))
 
     rows = cur.fetchall()
     cur.close()
     db.close()
     return rows
-
 def get_user_rank(user_id):
     db = get_db()
     cur = db.cursor()
@@ -237,7 +244,6 @@ def login():
     session["points"] = user[4]
 
     return redirect(url_for("dashboard"))
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":
@@ -245,14 +251,21 @@ def register():
 
     username = request.form.get("username")
     password = request.form.get("password")
+    name = request.form.get("name")
+    college = request.form.get("college")
+
+    if college == "other":
+        college = request.form.get("other_college")
 
     try:
-        create_user(username, password)
+        create_user(username, password, name, college)
         return redirect(url_for("login"))
     except errors.IntegrityError:
         return render_template("register.html", error="Username already exists")
     except Exception:
         return render_template("register.html", error="Registration failed")
+    
+
 
 @app.route("/dashboard")
 def dashboard():
@@ -277,12 +290,20 @@ def dashboard():
         points=current_points,
         rank=current_rank
     )
-
 @app.route("/leaderboard")
 def leaderboard():
-    leaderboard_rows = get_leaderboard(10)
-    return render_template("leaderboard.html", leaderboard=leaderboard_rows)
+    college = request.args.get("college")
 
+    if not college:   # handles "" and None
+        college = None
+
+    leaderboard_rows = get_leaderboard(10, college)
+
+    return render_template(
+        "leaderboard.html",
+        leaderboard=leaderboard_rows,
+        selected_college=college
+    )
 @app.route("/logout")
 def logout():
     session.clear()

@@ -186,13 +186,20 @@ body{
 </head>
 
 <body>
-
 <nav class="navbar">
     <div class="logo">🌱 EcoSort</div>
+
     <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="#">About</a>
-        <a href="#">Login</a>
+        {% if session.get("user_id") %}
+            <a href="/dashboard">Dashboard</a>
+            <a href="/predict">Predict</a>
+            <a href="/leaderboard">Leaderboard</a>
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/">Home</a>
+            <a href="#">About</a>
+            <a href="/login">Login</a>
+        {% endif %}
     </div>
 </nav>
 

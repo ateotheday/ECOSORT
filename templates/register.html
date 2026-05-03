@@ -171,9 +171,34 @@ button:hover{
         <form method="POST">
             <input type="text" name="username" placeholder="Username" required>
             <input type="text" name="name" placeholder="Full Name" required>
-            <input type="text" name="organization" placeholder="Organization Name">
-            <input type="password" name="password" placeholder="Password" required>
+           <input type="password" name="password" placeholder="Password" required>
+<label style="display:block; text-align:left;">Select Your College</label>
 
+<select name="college" required>
+    <option value="">Select College</option>
+
+    <option value="College of Engineering Munnar">College of Engineering Munnar</option>
+    <option value="CET Trivandrum">CET Trivandrum</option>
+    <option value="GEC Thrissur">GEC Thrissur</option>
+    <option value="MEC Kochi">MEC Kochi</option>
+    <option value="TKM Kollam">TKM Kollam</option>
+    <option value="GEC Kozhikode">GEC Kozhikode</option>
+    <option value="RIT Kottayam">RIT Kottayam</option>
+    <option value="SCTCE Trivandrum">SCTCE Trivandrum</option>
+    <option value="FISAT Ernakulam">FISAT Ernakulam</option>
+    <option value="CE Chengannur">College of Engineering Chengannur</option>
+    <option value="MES Kuttippuram">MES College Kuttippuram</option>
+    <option value="ASIET Kalady">Adi Shankara Institute Kalady</option>
+    <option value="MITS Ernakulam">MITS Ernakulam</option>
+    <option value="VJEC Kannur">Vimal Jyothi Engineering College Kannur</option>
+    <option value="AWH Calicut">AWH Engineering College Calicut</option>
+
+    <option value="other">Other</option>
+</select>
+
+<input type="text" name="other_college" id="otherCollege"
+       placeholder="Enter your college"
+       style="display:none;">
             <button type="submit">Register</button>
         </form>
 
@@ -183,6 +208,18 @@ button:hover{
     </div>
 
 </div>
+<script>
+document.querySelector("select[name='college']").addEventListener("change", function () {
+    let otherInput = document.getElementById("otherCollege");
 
+    if (this.value === "other") {
+        otherInput.style.display = "block";
+        otherInput.required = true;
+    } else {
+        otherInput.style.display = "none";
+        otherInput.required = false;
+    }
+});
+</script>
 </body>
 </html>

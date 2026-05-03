@@ -352,36 +352,55 @@ body{
         <h2>Why EcoSort?</h2>
         <p>Smart waste segregation for a cleaner planet.</p>
     </div>
+<div class="cards">
 
-    <div class="cards">
-        <div class="card">
-            <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1581092918056-0c4c3acd3789');"></div>
-            <div class="card-content">
-                <h3>⚡ AI Detection</h3>
-                <p>Instant classification.</p>
-            </div>
+    <!-- AI Detection -->
+    <div class="card">
+       <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1677442136019-21780ecad995');"></div>
+        <div class="card-content">
+            <h3>⚡ AI Detection</h3>
+            <p>Instant waste classification using AI models like YOLOv8.</p>
         </div>
     </div>
+
+    <!-- Hardware Integration -->
+    <div class="card">
+       <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1581092918056-0c4c3acd3789');"></div>
+        <div class="card-content">
+            <h3>🔧 Hardware Integration</h3>
+            <p>Connected with smart bins for real-time waste sorting.</p>
+        </div>
+    </div>
+
+    <!-- Score / Tracking -->
+    <div class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71');"></div>
+        <div class="card-content">
+            <h3>🌿 Eco Score System</h3>
+            <p>Tracks user contributions and rewards eco-friendly actions.</p>
+        </div>
+    </div>
+
 </section>
 
 <footer class="footer">
-    <p>© 2026 EcoSort 🌱</p>
+    <p>© 2026 EcoSort </p>
 </footer>
 
 <!-- CHATBOT BUTTON -->
 <div id="chatbot-button" onclick="toggleChat()">
-    🤖 Ask EcoSort
+     Ask EcoBot 🤖
 </div>
 
 <!-- CHATBOT BOX -->
 <div id="chat-container">
     <div id="chat-header">
-        EcoSort Assistant 
+        EcoBot
         <span id="close-btn" onclick="toggleChat()">✖</span>
     </div>
     <div id="messages"></div>
     <div id="input-area">
-        <input type="text" id="userInput" placeholder="Ask about waste..." />
+        <input type="text" id="userInput" placeholder="Know more about EcoSort..." />
         <button onclick="sendMessage()">Send</button>
     </div>
 </div>
@@ -409,7 +428,7 @@ function toggleChat(){
         chat.style.display = "flex";
 
         if(messages.innerHTML === ""){
-            messages.innerHTML = "<p><b>EcoBot:</b> Hi! Ask me where to throw waste 🌱</p>";
+            messages.innerHTML = "<p><b>EcoBot:</b> Hi! I am here to assist you with questions about EcoSort!</p>";
         }
     }
 }async function sendMessage(){
@@ -425,7 +444,7 @@ function toggleChat(){
     // clear input immediately
     inputBox.value = "";
 
-    // 🔥 loading spinner
+    //  loading spinner
     let loadingId = "loading-" + Date.now();
 
     messages.innerHTML += `
